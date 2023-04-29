@@ -8,9 +8,14 @@ public class GameManager : MonoBehaviour
     public int soulsCollected = 0;
     public Text soulsCollectedText;
 
+    private void Start()
+    {
+        soulsCollectedText.text = "Souls: " + 0;
+    }
+
     public void addSoul()
     {
         soulsCollected += 1;
-        soulsCollectedText.text = soulsCollected.ToString();
+        soulsCollectedText.text = "Souls: " + soulsCollected;
     }
 }

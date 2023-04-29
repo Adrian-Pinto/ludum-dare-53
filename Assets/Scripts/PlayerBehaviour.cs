@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    GameManager gameManager;
+
     public PlayerMovement movement;
 
     float horizontalMove = 0.0f;
@@ -12,16 +14,12 @@ public class PlayerBehaviour : MonoBehaviour
     bool jump = false;
     bool crouch = false;
 
-    public Text soulsText;
     GameObject soul;
     bool canPickUpSoul = false;
 
-    [HideInInspector]
-    int soulsCollected = 0;
-
     private void Start()
     {
-        soulsText.text = "Souls: " + 0;
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -44,8 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
             Destroy(soul);
             soul = null;
             canPickUpSoul = false;
-            soulsCollected++;
-            soulsText.text = "Souls: " + soulsCollected;
+            gameManager.addSoul();
         }
     }
 
