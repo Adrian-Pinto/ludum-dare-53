@@ -59,8 +59,19 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (collision.name == "Soul")
         {
+            collision.gameObject.GetComponent<SoulBehaviour>().ShowInfoText(true);
             canPickUpSoul = true;
             soul = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "Soul")
+        {
+            collision.gameObject.GetComponent<SoulBehaviour>().ShowInfoText(false);
+            canPickUpSoul = false;
+            soul = null;
         }
     }
 }

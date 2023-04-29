@@ -5,13 +5,14 @@ using UnityEngine;
 public class SoulBehaviour : MonoBehaviour
 {
     public GameObject player;
+    public GameObject infoText;
 
     bool canMove = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        infoText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,5 +22,10 @@ public class SoulBehaviour : MonoBehaviour
         {
             Vector3.Lerp(this.transform.position, player.transform.position, 0.5f);
         }
+    }
+
+    public void ShowInfoText(bool enabled)
+    {
+        infoText.gameObject.SetActive(enabled);
     }
 }
