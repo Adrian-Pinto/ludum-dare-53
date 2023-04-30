@@ -4,36 +4,35 @@ using UnityEngine;
 
 public class SoulBehaviour : MonoBehaviour
 {
+
+    public Soul soul;
     public GameObject player;
     public GameObject infoText;
     public GameObject soulSound;
-    public float score = 1000;
-    public float decayRate = 1;
-
-    bool canMove = false;
+ 
 
     // Start is called before the first frame update
     void Start()
     {
+        soul = new Soul();
         infoText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
-        {
-            Vector3.Lerp(this.transform.position, player.transform.position, 0.5f);
-        }
+        soul.DecaySoul();
 
-        if (score > 0.5)
-        {
-            score = score - decayRate * Time.deltaTime;
-        }
+        //if (score > 0.5)
+        //{
+        //    
+        //}
     }
 
     public void ShowInfoText(bool enabled)
     {
         infoText.gameObject.SetActive(enabled);
     }
+
+  
 }

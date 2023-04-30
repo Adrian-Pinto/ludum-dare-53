@@ -14,11 +14,14 @@ public class PlayerBehaviour : MonoBehaviour
     bool jump = false;
     bool crouch = false;
 
+    // Soul Mechanics
     GameObject soul;
     bool canPickUpSoul = false;
+    List<Soul> soulsCollected;
 
     private void Start()
     {
+        soulsCollected = new List<Soul>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
@@ -40,11 +43,19 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && canPickUpSoul)
         {
             Instantiate(soul.GetComponent<SoulBehaviour>().soulSound, soul.transform.position, Quaternion.identity);
-            gameManager.addSoul(soul.GetComponent<SoulBehaviour>().score);
+            //gameManager.addSoul(soul.GetComponent<SoulBehaviour>().score);
+            Soul newSoul = new Soul(soul.GetComponent<SoulBehaviour>().soul);
+            newSoul.currentState = Soul.State.PLAYER;
+            soulsCollected.Add(newSoul);
 
             Destroy(soul);
             soul = null;
             canPickUpSoul = false;
+        }
+
+        for (int i = 0; i < soulsCollected.Count; ++i)
+        {
+            soulsCollected[i].DecaySoul();
         }
     }
 

@@ -26,18 +26,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (soulScore > 0.5)
-        {
-            soulScore = soulScore - storedSoulDecayRate * Time.deltaTime * soulsCollected;
-            soulScoreTextDebug.text = ((int)soulScore).ToString();
-        }
+        //if (soulScore > 0.5)
+        //{
+        //    soulScore = soulScore - storedSoulDecayRate * Time.deltaTime * soulsCollected;
+        //    soulScoreTextDebug.text = ((int)soulScore).ToString();
+        //}
     }
 
     public void addSoul(float score)
     {
-        soulsCollected += 1;
-        soulsCollectedText.text = "Souls: " + soulsCollected + "/" + totalSoulAmount;
-        soulScore += score;
+        //soulsCollected += 1;
+        //soulsCollectedText.text = "Souls: " + soulsCollected + "/" + totalSoulAmount;
+        //soulScore += score;
     }
 
     public void restartLevel()
