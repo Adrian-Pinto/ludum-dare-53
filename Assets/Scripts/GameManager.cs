@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
 
     public void addSoul(float score)
     {
-        //soulsCollected += 1;
-        //soulsCollectedText.text = "Souls: " + soulsCollected + "/" + totalSoulAmount;
+        soulsCollected += 1;
+        soulsCollectedText.text = "Souls: " + soulsCollected + "/" + totalSoulAmount;
         //soulScore += score;
     }
 
@@ -45,13 +45,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void finishLevel()
+    public void finishLevel(List<Soul> souls)
     {
         if(soulsCollected == totalSoulAmount)
         {
-            int finalScore = ((int)soulScore);
+            int sum = 0;
+
+            for (int i = 0; i < souls.Count; ++i)
+            {
+                sum += (int)souls[i].score;
+            }
+
+
+            //int finalScore = ((int)soulScore);
             finishLevelScreen.SetActive(true);
-            finalScoreText.text = "Final score: " + finalScore;
+            finalScoreText.text = "Final score: " + sum;
         }
     }
 }
