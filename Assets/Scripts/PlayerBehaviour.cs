@@ -14,11 +14,14 @@ public class PlayerBehaviour : MonoBehaviour
     bool jump = false;
     bool crouch = false;
 
+    // Soul Mechanics
     GameObject soul;
     bool canPickUpSoul = false;
+    List<Soul> soulsCollected;
 
     private void Start()
     {
+        soulsCollected = new List<Soul>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
@@ -39,12 +42,26 @@ public class PlayerBehaviour : MonoBehaviour
         // Soul mechanics
         if (Input.GetKeyDown(KeyCode.E) && canPickUpSoul)
         {
+            // Spawn sound
             Instantiate(soul.GetComponent<SoulBehaviour>().soulSound, soul.transform.position, Quaternion.identity);
-            gameManager.addSoul(soul.GetComponent<SoulBehaviour>().score);
+            
+            // Add score
+            gameManager.addSoul(0.0f);
+            
+            // Add soul to the player's soul list
+            Soul newSoul = new Soul(soul.GetComponent<SoulBehaviour>().soul);
+            newSoul.currentState = Soul.State.PLAYER;
+            soulsCollected.Add(newSoul);
 
+            // Destroy and reset the behaviour
             Destroy(soul);
             soul = null;
             canPickUpSoul = false;
+        }
+
+        for (int i = 0; i < soulsCollected.Count; ++i)
+        {
+            soulsCollected[i].DecaySoul();
         }
     }
 
@@ -64,7 +81,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (collision.name == "Finish")
         {
-            gameManager.finishLevel();
+            gameManager.finishLevel(soulsCollected);
         }
     }
 

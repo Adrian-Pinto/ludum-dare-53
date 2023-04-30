@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameManager
   - Soul
+  - SoulPot
   layers:
   - Default
   - TransparentFX
