@@ -39,6 +39,8 @@ public class PlayerBehaviour : MonoBehaviour
         // Soul mechanics
         if (Input.GetKeyDown(KeyCode.E) && canPickUpSoul)
         {
+            Instantiate(soul.GetComponent<SoulBehaviour>().soulSound, soul.transform.position, Quaternion.identity);
+            
             Destroy(soul);
             soul = null;
             canPickUpSoul = false;

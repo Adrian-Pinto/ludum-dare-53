@@ -6,6 +6,7 @@ public class SoulBehaviour : MonoBehaviour
 {
     public GameObject player;
     public GameObject infoText;
+    public GameObject soulSound;
 
     bool canMove = false;
 
