@@ -62,6 +62,10 @@ public class PlayerBehaviour : MonoBehaviour
             canPickUpSoul = true;
             soul = collision.gameObject;
         }
+        if (collision.name == "Finish")
+        {
+            gameManager.finishLevel();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
