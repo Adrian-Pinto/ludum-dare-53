@@ -40,11 +40,11 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && canPickUpSoul)
         {
             Instantiate(soul.GetComponent<SoulBehaviour>().soulSound, soul.transform.position, Quaternion.identity);
-            
+            gameManager.addSoul(soul.GetComponent<SoulBehaviour>().score);
+
             Destroy(soul);
             soul = null;
             canPickUpSoul = false;
-            gameManager.addSoul();
         }
     }
 
@@ -54,9 +54,9 @@ public class PlayerBehaviour : MonoBehaviour
         jump = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Soul")
+        if (collision.CompareTag("Soul"))
         {
             collision.gameObject.GetComponent<SoulBehaviour>().ShowInfoText(true);
             canPickUpSoul = true;
@@ -66,7 +66,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.name == "Soul")
+        if (collision.CompareTag("Soul"))
         {
             collision.gameObject.GetComponent<SoulBehaviour>().ShowInfoText(false);
             canPickUpSoul = false;
