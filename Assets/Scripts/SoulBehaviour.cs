@@ -6,7 +6,6 @@ public class SoulBehaviour : MonoBehaviour
 {
 
     public Soul soul;
-    public GameObject player;
     public GameObject infoText;
     public GameObject soulSound;
  

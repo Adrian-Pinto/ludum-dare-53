@@ -637,6 +637,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1771162195053982423, guid: 39b2f5369247048bfbc89c8975ed9bd6, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 727897931}
     - target: {fileID: 2658210759644638692, guid: 39b2f5369247048bfbc89c8975ed9bd6, type: 3}
       propertyPath: m_Name
       value: Soul (1)
@@ -703,7 +707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437199035}
   m_Layer: 6
-  m_Name: GroundCheck (1)
+  m_Name: LeftSideCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1024,17 +1028,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7707075ad8edddb40bd418852f7a4b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 650
+  m_JumpForce: 600
+  m_SideJumpForce: 1000
   m_CrouchSpeed: 0.36
-  m_MovementSmoothing: 0.05
+  m_MovementSmoothing: 0.15
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 55
-  m_GroundCheck:
-  - {fileID: 232369429}
-  - {fileID: 437199035}
-  - {fileID: 783988787}
+    m_Bits: 1
+  m_GroundCheck: {fileID: 232369429}
+  m_LeftCheck: {fileID: 437199035}
+  m_RightCheck: {fileID: 783988787}
   m_CeilingCheck: {fileID: 906004572}
   m_CrouchDisableCollider: {fileID: 727897936}
   OnLandEvent:
@@ -1297,7 +1301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 783988787}
   m_Layer: 6
-  m_Name: GroundCheck (2)
+  m_Name: RightSideCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
