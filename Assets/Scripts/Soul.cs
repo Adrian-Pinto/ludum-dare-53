@@ -33,15 +33,12 @@ public class Soul
         {
             case Soul.State.WANDERING:
                 score = score - decayRate * Time.deltaTime;
-                Debug.Log("Decaying from wandering" + score);
                 break;
             case State.PLAYER:
                 score = score - (decayRate * 0.5f) * Time.deltaTime;
-                Debug.Log("Decaying from player" + score);
                 break;
             case State.POT:
                 
-                Debug.Log("Decaying from Pot, not decaying");
                 break;
         }
     }
