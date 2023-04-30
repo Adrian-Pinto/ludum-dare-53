@@ -146,13 +146,13 @@ public class PlayerMovement : MonoBehaviour
 			if (move > 0 && !m_FacingRight)
 			{
 				// ... flip the player.
-				//Flip();
+				Flip();
 			}
 			// Otherwise if the input is moving the player left and the player is facing right...
 			else if (move < 0 && m_FacingRight)
 			{
 				// ... flip the player.
-				//Flip();
+				Flip();
 			}
 		}
 

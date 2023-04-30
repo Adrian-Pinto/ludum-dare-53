@@ -19,8 +19,11 @@ public class PlayerBehaviour : MonoBehaviour
     bool canPickUpSoul = false;
     List<Soul> soulsCollected;
 
+    Animator anim;
+
     private void Start()
     {
+        anim = this.gameObject.GetComponent<Animator>();
         soulsCollected = new List<Soul>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
@@ -30,8 +33,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
+        anim.SetFloat("Speed", Mathf.Abs(horizontalMove));
+
         if (Input.GetButtonDown("Jump"))
+        {
+            anim.SetBool("Jump", true);
             jump = true;
+        }
 
         if (Input.GetButtonDown("Crouch"))
             crouch = true;
@@ -42,6 +50,9 @@ public class PlayerBehaviour : MonoBehaviour
         // Soul mechanics
         if (Input.GetKeyDown(KeyCode.E) && canPickUpSoul)
         {
+            anim.SetTrigger("Attack");
+
+
             // Spawn sound
             Instantiate(soul.GetComponent<SoulBehaviour>().soulSound, soul.transform.position, Quaternion.identity);
             
@@ -93,5 +104,10 @@ public class PlayerBehaviour : MonoBehaviour
             canPickUpSoul = false;
             soul = null;
         }
+    }
+
+    public void TouchedFloor()
+    {
+        anim.SetBool("Jump", false);
     }
 }
