@@ -17,8 +17,15 @@ public class GameManager : MonoBehaviour
 
     private int totalSoulAmount;
 
+    public SaveSystem saveSystem;
+
+    public GameObject musicAudio;
+
     private void Start()
     {
+        float audioVolume = saveSystem.LoadVolume();
+        musicAudio.GetComponent<AudioSource>().volume = audioVolume;
+
         GameObject[] souls = GameObject.FindGameObjectsWithTag("Soul");
         totalSoulAmount = souls.Length;
         soulsCollectedText.text = "Souls: " + 0 + "/" + totalSoulAmount;
