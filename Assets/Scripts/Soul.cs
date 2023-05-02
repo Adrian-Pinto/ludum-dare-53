@@ -6,32 +6,40 @@ public class Soul
 {
     public enum State
     {
-        WANDERING = 0,
+        WANDERING,
         PLAYER,
         POT
     }
 
     public float score = 1000;
     public float decayRate = 1;
-
     public State currentState = State.WANDERING;
+
     public Soul()
     {
-        this.score = 1000.0f;
-        this.decayRate = 10.0f;
-        this.currentState = State.WANDERING;
+        score = 1000.0f;
+        decayRate = 10.0f;
+        currentState = State.WANDERING;
     }
+
     public Soul(Soul soul)
     {
-        this.score = soul.score;
-        this.decayRate = soul.decayRate;
-        this.currentState = soul.currentState;
+        score = soul.score;
+        decayRate = soul.decayRate;
+        currentState = soul.currentState;
     }
+
     public void DecaySoul()
     {
+        if (score < 1)
+        {
+            score = 0;
+            return;
+        }
+
         switch (currentState)
         {
-            case Soul.State.WANDERING:
+            case State.WANDERING:
                 score = score - decayRate * Time.deltaTime;
                 break;
             case State.PLAYER:

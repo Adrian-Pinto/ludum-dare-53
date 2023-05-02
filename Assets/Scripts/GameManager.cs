@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public Text soulScoreTextDebug;
     public GameObject finishLevelScreen;
     public TMP_Text finalScoreText;
+    public AudioSource levelMusic;
+    public AudioSource endMusic;
 
     private int totalSoulAmount;
 
@@ -60,6 +62,9 @@ public class GameManager : MonoBehaviour
             //int finalScore = ((int)soulScore);
             finishLevelScreen.SetActive(true);
             finalScoreText.text = "Final score: " + sum;
+
+            levelMusic.Stop();
+            endMusic.Play();
         }
     }
 }

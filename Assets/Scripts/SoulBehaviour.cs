@@ -21,11 +21,6 @@ public class SoulBehaviour : MonoBehaviour
     void Update()
     {
         soul.DecaySoul();
-
-        //if (score > 0.5)
-        //{
-        //    
-        //}
     }
 
     public void ShowInfoText(bool enabled)
