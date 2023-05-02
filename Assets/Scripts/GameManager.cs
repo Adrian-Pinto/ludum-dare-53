@@ -14,18 +14,13 @@ public class GameManager : MonoBehaviour
     public Text soulScoreTextDebug;
     public GameObject finishLevelScreen;
     public TMP_Text finalScoreText;
+    public AudioSource levelMusic;
+    public AudioSource endMusic;
 
     private int totalSoulAmount;
 
-    public SaveSystem saveSystem;
-
-    public GameObject musicAudio;
-
     private void Start()
     {
-        float audioVolume = saveSystem.LoadVolume();
-        musicAudio.GetComponent<AudioSource>().volume = audioVolume;
-
         GameObject[] souls = GameObject.FindGameObjectsWithTag("Soul");
         totalSoulAmount = souls.Length;
         soulsCollectedText.text = "Souls: " + 0 + "/" + totalSoulAmount;
@@ -67,6 +62,9 @@ public class GameManager : MonoBehaviour
             //int finalScore = ((int)soulScore);
             finishLevelScreen.SetActive(true);
             finalScoreText.text = "Final score: " + sum;
+
+            levelMusic.Stop();
+            endMusic.Play();
         }
     }
 }

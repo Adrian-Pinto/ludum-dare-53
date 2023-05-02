@@ -18,10 +18,10 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
 	const float k_GroundedRadius = 0.2f; // Radius of the overlap circle to determine if grounded
+	const float k_CeilingRadius = 0.2f; // Radius of the overlap circle to determine if the player can stand up
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private bool m_SlideLeft = false;            // Whether or not the player is sliding on the left.
 	private bool m_SlideRight = false;            // Whether or not the player is sliding on the right.
-	const float k_CeilingRadius = 0.2f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
 	{
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
+		m_SlideLeft = false;
+		m_SlideRight = false;
+
 
 		Collider2D[] collidersWithGround = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < collidersWithGround.Length; i++)
@@ -60,7 +63,9 @@ public class PlayerMovement : MonoBehaviour
 			{
 				m_Grounded = true;
 				if (!wasGrounded)
+                {
 					OnLandEvent.Invoke();
+				}
 			}
 		}
 
@@ -70,11 +75,9 @@ public class PlayerMovement : MonoBehaviour
 			if (!m_Grounded && !m_SlideLeft && collidersWithLeft[i].gameObject != gameObject)
 			{
 				m_SlideLeft = true;
-			} else if (m_Grounded && m_SlideLeft)
-			{
-				m_SlideLeft = false;
 			}
 		}
+
 
 		Collider2D[] collidersWithRight = Physics2D.OverlapCircleAll(m_RightCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < collidersWithRight.Length; i++)
@@ -82,10 +85,6 @@ public class PlayerMovement : MonoBehaviour
 			if (!m_Grounded && !m_SlideRight && collidersWithRight[i].gameObject != gameObject)
 			{
 				m_SlideRight = true;
-			}
-			else if (m_Grounded && m_SlideRight)
-			{
-				m_SlideRight = false;
 			}
 		}
 		
@@ -95,14 +94,14 @@ public class PlayerMovement : MonoBehaviour
 	public void Move(float move, bool crouch, bool jump)
 	{
 		// If crouching, check to see if the character can stand up
-		if (!crouch)
-		{
-			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-			{
-				crouch = true;
-			}
-		}
+		//if (!crouch)
+		//{
+		//	// If the character has a ceiling preventing them from standing up, keep them crouching
+		//	if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+		//	{
+		//		crouch = true;
+		//	}
+		//}
 
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
@@ -162,18 +161,17 @@ public class PlayerMovement : MonoBehaviour
 			if (m_Grounded)
 			{
 				// Add a vertical force to the player.
-				m_Grounded = false;
 				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 			} else if (m_SlideLeft)
 			{
 				// Add a vertical force to the player.
 				m_SlideLeft = false;
-				m_Rigidbody2D.AddForce(new Vector2(m_SideJumpForce, m_JumpForce * 0.66f));
+				m_Rigidbody2D.AddForce(new Vector2(m_SideJumpForce, m_JumpForce * 0.90f));
 			} else if (m_SlideRight)
 			{
 				// Add a vertical force to the player.
 				m_SlideRight = false;
-				m_Rigidbody2D.AddForce(new Vector2(-m_SideJumpForce, m_JumpForce * 0.66f));
+				m_Rigidbody2D.AddForce(new Vector2(-m_SideJumpForce, m_JumpForce * 0.90f));
 			}
         }
 	}
@@ -185,8 +183,9 @@ public class PlayerMovement : MonoBehaviour
 		m_FacingRight = !m_FacingRight;
 
 		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+		gameObject.GetComponent<SpriteRenderer>().flipX = !m_FacingRight;
+		//Vector3 theScale = transform.localScale;
+		//theScale.x *= -1;
+		//transform.localScale = theScale;
 	}
 }
